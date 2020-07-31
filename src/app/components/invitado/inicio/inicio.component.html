@@ -1,0 +1,65 @@
+
+<div class="container mt-2">
+  <small *ngIf="infoData">Resultados {{infoData.from}}-{{infoData.to}} de alrededor de {{infoData.total}}</small>
+
+  <div class="col-12 mx-auto text-center" *ngIf="ocultar">
+    <app-cargando></app-cargando>
+  </div>
+
+  <div class="row mt-2" *ngIf="!ocultar">
+    <div class="col-12 py-4 clearfix interlineado" *ngFor="let data of datas" >
+      <div class="imagenLibroInvitado float-sm-left ">
+        <img [src]="url+'libro/'+data.imagen" class="px-2" >
+      </div>
+      <div class="informacionInvitadoLibro">
+          <h4 class="mb-1">{{data.titulo }}</h4>
+          <p class="text-muted" *ngFor="let autorOne of data.autores">
+            <span *ngIf="autorOne.colaboracion == 'autor'">Autor: {{autorOne.autor.apellido }}<span *ngIf="autorOne.autor.nombre">, {{autorOne.autor.nombre}}
+              </span>
+            </span>
+          </p>
+          <p class="text-muted">
+            Editorial: <span *ngFor="let editor of data.editoriales">
+              {{editor.editorial.nombre}}
+            </span>
+          </p>
+          <p class="text-muted">
+            Área/Materia: <span *ngFor="let mater of data.materias">
+              {{mater.materia.area.nombre}} / {{mater.materia.nombre}}
+            </span>
+          </p>
+          <p class="text-muted">
+            Ubicación: <span *ngFor="let ubica of data.ubicacion">
+              B{{ubica.biblioteca}} - {{ubica.estante | titlecase}} - {{ubica.numero}}
+            </span>
+          </p>
+          <p class="text-muted">
+            Registro: {{data.registro}}
+          </p>
+          <a [routerLink]="[data.id]">Ver más</a>
+      </div>
+    </div>
+
+    <div class="mt-3 mx-auto">
+      <nav aria-label="Page navigation example" >
+        <ul class="pagination justify-content-center">
+          <li class="page-item" [ngClass]="{'disabled':infoData.prev_page_url === null}">
+            <button class="page-link" (click)="paginacion(infoData.prev_page_url)">Anterior</button>
+          </li>
+
+          <li class="page-item">
+            <button class="page-link active">{{infoData.current_page}}</button>
+          </li>
+
+          <li class="page-item" [ngClass]="{'disabled':infoData.next_page_url === null}">
+            <button class="page-link" (click)="paginacion(infoData.next_page_url)">Siguiente</button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+
+  </div>
+</div>
+
+

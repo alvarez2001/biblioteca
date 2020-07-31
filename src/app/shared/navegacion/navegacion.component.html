@@ -1,0 +1,15 @@
+<nav aria-label="Page navigation example" >
+  <ul class="pagination justify-content-center">
+    <li class="page-item" [ngClass]="{'disabled': datosPaginacion.prev_page_url === null}">
+      <button class="page-link" (click)="paginacion(datosPaginacion.prev_page_url)">Anterior</button>
+    </li>
+
+    <li class="page-item">
+      <button class="page-link active">{{datosPaginacion.current_page}}</button>
+    </li>
+
+    <li class="page-item" [ngClass]="{'disabled':datosPaginacion.next_page_url === null}">
+      <button class="page-link" (click)="paginacion(datosPaginacion.next_page_url)">Siguiente</button>
+    </li>
+  </ul>
+</nav>

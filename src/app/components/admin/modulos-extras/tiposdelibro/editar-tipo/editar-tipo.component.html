@@ -1,0 +1,25 @@
+<h2 mat-dialog-title class="text-center">Actualizar tipos de libro</h2>
+
+
+<mat-dialog-content>
+
+    <form [formGroup]="formGenero">
+        <div class="row">
+          <mat-form-field appearance="outline" class="col-12">
+            <mat-label>Tipo de libro</mat-label>
+            <input matInput formControlName="nombre" required  type="text" >
+          </mat-form-field>
+
+        </div>
+    </form>
+
+</mat-dialog-content>
+
+
+<mat-dialog-actions  class="float-right">
+  <button class="btn white-text  red mx-1" mat-dialog-close>Cancelar</button>
+  <button class="btn white-text green" [disabled]="guardando" (click)="actualizarTipo()">
+    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="guardando"></span>
+    Actualizar
+  </button>
+</mat-dialog-actions>

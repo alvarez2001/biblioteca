@@ -1,0 +1,32 @@
+<div class="col-12 mt-3 clearfix">
+  <!--<div class="float-left">
+    <h3 class="m-0">titulo</h3>
+  </div>-->
+  <div class="float-left" *ngIf="titulo">
+    <h3>{{titulo}}</h3>
+  </div>
+  <div class="float-right">
+    <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+  </div>
+
+
+  <mat-menu #menu="matMenu">
+    <a [routerLink]="['areas']" mat-menu-item>Áreas</a>
+    <a [routerLink]="['autores']" mat-menu-item>Autores</a>
+    <a [routerLink]="['clasificaciones']" mat-menu-item>Clasificaciones</a>
+    <a [routerLink]="['coleccion']" mat-menu-item>Colecciones</a>
+    <a [routerLink]="['editoriales']" mat-menu-item>Editoriales</a>
+    <a [routerLink]="['idioma']" mat-menu-item>Idiomas</a>
+    <a [routerLink]="['materias']" mat-menu-item>Materias</a>
+    <a [routerLink]="['formatos']" mat-menu-item>Formatos</a>
+    <a [routerLink]="['tipo-de-libros']" mat-menu-item>Tipo de libros</a>
+
+  </mat-menu>
+
+
+
+</div>
+
+<div class="container">
+  <router-outlet></router-outlet>
+</div>

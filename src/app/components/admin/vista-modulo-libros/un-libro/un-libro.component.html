@@ -1,0 +1,238 @@
+<div class="px-3">
+
+
+
+
+  <div class="col-12 text-center" *ngIf="!data">
+    <h2 class="text-center">{{tituloLibro }}</h2>
+    <app-cargando></app-cargando>
+  </div>
+
+  <div class="row mt-3" *ngIf="data">
+    <div class="col-12 col-md-4">
+      <div class="imagenLibro" >
+        <img [src]="url+'libro/'+data.imagen" >
+      </div>
+      <div class="row mt-2">
+        <mat-form-field class="col-6 " appearance="outline">
+          <mat-label>Clasificación</mat-label>
+          <input type="text" matInput readonly [ngModel]="data.isbn[0].clasificacion.clasificacion ">
+        </mat-form-field>
+
+        <mat-form-field class="col-6 " appearance="outline">
+          <mat-label>Registro Libro</mat-label>
+          <input type="text" matInput readonly [ngModel]="data.registro">
+        </mat-form-field>
+
+        <mat-form-field class="col-12 " appearance="outline">
+          <mat-label>Codigo ISBN</mat-label>
+          <input type="text" matInput readonly [ngModel]="data.isbn[0].codigo">
+        </mat-form-field>
+
+        <div class="mb-2">
+          <label for="fileImage" class="col-12">Cambiar imagen</label>
+          <input type="file" id="fileImage" name="fileImage" accept="image/*" class="col-12 mb-3"  (change)="enviarImagen($event)" >
+          <div class="alert alert-danger" *ngIf="errorSubida === 'failed'">
+            {{mensaje}}
+          </div>
+          <div class="alert alert-success" *ngIf="errorSubida === 'success'">
+            {{mensaje}}
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+    <div class="col-12 col-md-8">
+      <div class="row">
+        <mat-form-field class="col-12" appearance="outline">
+          <mat-label>Titulo</mat-label>
+          <input type="text" required matInput readonly  [(ngModel)]="data.titulo"  (blur)="deshabilitarCampo($event)" (focus)="habilitarCampo($event)">
+        </mat-form-field>
+
+        <mat-form-field class="col-12" appearance="outline">
+          <mat-label>Subtitulo</mat-label>
+          <input required type="text" matInput readonly  (blur)="deshabilitarCampo($event)" (focus)="habilitarCampo($event)" [(ngModel)]="data.subtitulo">
+        </mat-form-field>
+
+        <mat-form-field class="col-6" appearance="outline">
+          <mat-label>Tipo de Obra</mat-label>
+          <mat-select required [ngModel]="data.tipos[0].tipo_id" disabled>
+            <mat-option *ngFor="let tipo of tipoObra" [value]="tipo.id">{{tipo.nombre}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="col-6 " appearance="outline">
+          <mat-label>Formato</mat-label>
+          <input type="text" matInput  readonly [ngModel]="data.formatos[0].formato.formato">
+        </mat-form-field>
+
+        <mat-form-field class="col-6 col-md-3 " appearance="outline">
+          <mat-label>Idioma</mat-label>
+          <mat-select multiple name="idiomas[]" readonly [ngModel]="idiomaData">
+            <mat-option *ngFor="let idioma of idiomas" [value]="idioma.id">{{idioma.idioma}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="col-6 col-md-3 " appearance="outline">
+          <mat-label>Ciudad</mat-label>
+          <input type="text" matInput  readonly [ngModel]="data.informacion[0].ciudad">
+        </mat-form-field>
+
+        <mat-form-field class="col-6 col-md-3 " appearance="outline">
+          <mat-label>Tomo</mat-label>
+          <input type="text" matInput  readonly [ngModel]="data.informacion[0].tomo">
+        </mat-form-field>
+
+        <mat-form-field class="col-6 col-md-3 " appearance="outline">
+          <mat-label>Volumen</mat-label>
+          <input type="text" matInput  readonly [ngModel]="data.informacion[0].volumen ">
+        </mat-form-field>
+
+        <mat-form-field class="col-6 " appearance="outline">
+          <mat-label>Colección</mat-label>
+          <input type="text" matInput  readonly [ngModel]="(data.coleccion[0])?.coleccion.nombre">
+        </mat-form-field>
+
+        <mat-form-field class="col-6 " appearance="outline">
+          <mat-label>Numero de Colección</mat-label>
+          <input type="text" matInput  readonly [ngModel]="data.informacion[0].numero_coleccion ">
+        </mat-form-field>
+
+        <!--4RTA FILA-->
+
+        <mat-form-field class="col-6 col-md-3 " appearance="outline">
+          <mat-label>Nº Impresión</mat-label>
+          <input type="text" matInput  readonly [ngModel]="data.informacion[0].numero_impresion ">
+        </mat-form-field>
+
+        <mat-form-field class="col-6 col-md-3 " appearance="outline">
+          <mat-label>Fecha Impresión</mat-label>
+          <input type="text" matInput  readonly [ngModel]="data.informacion[0].fecha_impresion | date:'dd/MM/yyyy' ">
+        </mat-form-field>
+
+        <mat-form-field class="col-6 col-md-3 " appearance="outline">
+          <mat-label>Numero Edición</mat-label>
+          <input type="text" matInput  readonly [ngModel]="data.informacion[0].numero_edicion ">
+        </mat-form-field>
+
+        <mat-form-field class="col-6 col-md-3 " appearance="outline">
+          <mat-label>Fecha Edición</mat-label>
+          <input type="text" matInput  readonly [ngModel]="data.informacion[0].fecha_edicion | date:'dd/MM/yyyy' ">
+        </mat-form-field>
+
+        <mat-form-field class="col-12 col-md-6" appearance="outline">
+            <mat-label>Genero actual</mat-label>
+            <input matInput type="text" readonly [ngModel]="data?.valoraciones[0]?.valoracion?.genero?.genero">
+        </mat-form-field>
+
+        <mat-form-field class="col-12 col-md-6" appearance="outline">
+          <mat-label>Valoración actual</mat-label>
+          <input matInput type="text" readonly [value]=" data?.valoraciones[0]?.valoracion?.puntaje +' - ' + data?.valoraciones[0]?.valoracion?.descripcion">
+      </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-12 col-md-6">
+          <mat-label>Genero nuevo</mat-label>
+          <mat-select  name="valoracion" (selectionChange)="buscarValoracion()" [(ngModel)]="valorar"   required>
+            <mat-option *ngFor="let genero of generos" [value]="genero.id">{{genero.genero}}</mat-option>
+          </mat-select>
+
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-12 col-md-6">
+          <mat-label>Valoración nueva</mat-label>
+          <mat-select [(ngModel)]="valoracionEscogida" name="valoracionEscogida"   required>
+            <mat-option *ngFor="let valor of valoracion" [value]="valor.id">{{valor.puntaje}} - {{valor.descripcion}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="outline" class="col-12">
+          <mat-label>Palabras Clave</mat-label>
+          <textarea required matInput maxlength="300" required minlength="1" readonly (blur)="deshabilitarCampo($event)" (focus)="habilitarCampo($event)" [(ngModel)]="data.etiquetas"></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="col-12">
+          <mat-label>Breve descripción</mat-label>
+          <textarea matInput maxlength="300" minlength="1" required readonly (blur)="deshabilitarCampo($event)" (focus)="habilitarCampo($event)" [(ngModel)]="data.descripcion[0].descripcion"></textarea>
+        </mat-form-field>
+
+
+        <h5 class="col-12 text-center">Ubicación del Libro</h5>
+        <div class="col-12">
+          <div class="row interlineado pt-2">
+            <mat-form-field class="col-md-3 col-6 mx-auto" appearance="outline">
+              <mat-label>Biblioteca</mat-label>
+              <input type="text" matInput  readonly [ngModel]="data.ubicacion[0].biblioteca ">
+            </mat-form-field>
+
+            <mat-form-field class="col-md-3 col-6 mx-auto" appearance="outline">
+              <mat-label>Estante</mat-label>
+              <input type="text" matInput  readonly [ngModel]="data.ubicacion[0].estante ">
+            </mat-form-field>
+
+            <mat-form-field class="col-md-3 col-12 mx-auto" appearance="outline">
+              <mat-label>Número</mat-label>
+              <input type="text" matInput  readonly [ngModel]="data.ubicacion[0].numero ">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <h5 class="col-12 text-center">Autores</h5>
+        <div class="col-12 interlineado">
+          <div class="row  pt-2" *ngFor="let autor of data.autores">
+            <mat-form-field class="col-md-6 col-12" appearance="outline">
+              <mat-label>Entidad Autora</mat-label>
+              <mat-select disabled [ngModel]="autor.autor_id">
+                <mat-option [value]="autor.autor.id">{{autor.autor.apellido }}<span *ngIf="autor.autor.nombre">,</span> {{autor.autor.nombre }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="col-md-6 col-12" appearance="outline">
+              <mat-label>Colaboración</mat-label>
+              <input type="text" matInput  readonly [ngModel]="autor.colaboracion ">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <h5 class="col-12 text-center">Materias</h5>
+        <div class="col-12 interlineado">
+          <div class="row  pt-2" *ngFor="let materiaOne of data.materias">
+            <mat-form-field class="col-12" appearance="outline">
+              <mat-label>Materia</mat-label>
+              <mat-select disabled [ngModel]="materiaOne.materia_id">
+                <mat-option [value]="materiaOne.materia.id">
+                  Area: {{materiaOne.materia.area.nombre }} | {{materiaOne.materia.nombre }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <h5 class="col-12 text-center">Editoriales</h5>
+        <div class="col-12 interlineado">
+          <div class="row  pt-2" *ngFor="let oneEditorial of data.editoriales">
+            <mat-form-field class="col-12" appearance="outline">
+              <mat-label>Editorial</mat-label>
+              <mat-select disabled [ngModel]="oneEditorial.editorial_id">
+                <mat-option [value]="oneEditorial.editorial.id">{{oneEditorial.editorial.nombre }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="col-12 mb-3 text-center">
+          <button class="btn mx-2 white-text grey darken-1" (click)="publicarLibro()" [disabled]="enviandoDatos">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="enviandoDatos"></span>
+            Publicar</button>
+          <button class="btn mx-2 white-text grey darken-1" [disabled]="enviandoDatos" (click)="modificarCampos()">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="enviandoDatos"></span>
+            Modificar</button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

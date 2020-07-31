@@ -1,0 +1,10 @@
+.animacion{
+  animation-name: fadeInBusqueda;
+  animation-duration: 3s;
+}
+@keyframes fadeInBusqueda{
+  0%{
+    opacity: 0;
+  }
+
+}

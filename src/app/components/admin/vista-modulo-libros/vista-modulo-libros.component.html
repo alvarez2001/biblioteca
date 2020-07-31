@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="col-12 mt-3 clearfix">
+    <div class="float-left">
+      <h3 class="m-0">{{datoTitulo}}</h3>
+    </div>
+    <div class="float-right">
+      <a [routerLink]="['status/libro']" class=" btn white-text grey darken-1">Status</a>
+      <a [routerLink]="['registrar-libro']" class=" mx-2 btn white-text grey darken-1">Incluir</a>
+      <a [routerLink]="['ver-libro']" class="btn white-text grey darken-1">Ver</a>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

@@ -1,0 +1,22 @@
+<div class="">
+  <form [formGroup]="form" (ngSubmit)="actualizar()">
+    <h2 mat-dialog-title class="text-center mb-2">Cambiar status</h2>
+    <div class="row ">
+      <div class="col-12">
+        <mat-form-field appearance="outline" class="col-12">
+          <mat-label>Status</mat-label>
+          <mat-select required formControlName="status">
+            <mat-option *ngFor="let statu of status" [value]="statu.id">{{statu.nombre}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-12 text-center">
+        <button type="submit" class="btn white-text text-center grey darken-2 " [disabled]="guardando">
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="guardando"></span>
+          Guardar
+
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

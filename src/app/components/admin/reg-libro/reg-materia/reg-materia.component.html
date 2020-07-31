@@ -1,0 +1,32 @@
+<h2 mat-dialog-title class="text-center">Registrar Materia</h2>
+
+
+<mat-dialog-content>
+
+    <form [formGroup]="formPrimary">
+        <div class="row">
+          <mat-form-field appearance="outline" class="col-12">
+            <mat-label>Nombre</mat-label>
+            <input matInput required formControlName="nombre" type="text" >
+          </mat-form-field>
+
+          <mat-form-field class="col-12" appearance="outline">
+            <mat-label>Seleccione una Area</mat-label>
+            <mat-select required formControlName="area_id">
+              <mat-option *ngFor="let area of areas" [value]="area.id">{{area.nombre}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </div>
+    </form>
+
+</mat-dialog-content>
+
+
+<mat-dialog-actions  class="float-right">
+  <button class="btn white-text  red mx-1" mat-dialog-close>Cancelar</button>
+  <button class="btn white-text green" (click)="registrarMateria()">
+    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="guardando"></span>
+    Registrar
+  </button>
+</mat-dialog-actions>

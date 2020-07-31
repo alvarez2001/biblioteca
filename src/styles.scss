@@ -1,0 +1,183 @@
+/* You can add global styles to this file, and also import other style files */
+
+@charset "UTF-8";
+
+// Color
+@import "assets/importsSass/color-variables";
+@import "assets/importsSass/color-classes";
+@import "assets/importsSass/iconos-styles";
+
+
+//html, body { height: 100%; }
+body { margin: 0; font-family: sans-serif; font-size: 1em; }
+
+.text-center{
+  text-align: center;
+
+}
+.fondoContent{
+  background-color: #fff;
+}
+/*SIDENAV*/
+.container-sidenav{
+  height: 100vh;
+
+  .sidenav{
+      width: 270px;
+      box-shadow: none;
+      overflow-y: auto;
+  }
+}
+.navToggle{
+  font-size: 30px;
+  line-height: 2!important;
+  margin-left: 10px;
+  text-decoration: none!important;
+  cursor: pointer;
+}
+.exitToggle{
+  @extend .navToggle;
+  margin-left: 0px ;
+  margin-right: 10px;
+}
+/*SIDENAV*/
+
+.logoDiv{
+  margin:1.25em auto 0 auto;
+  height: 200px;
+  width: 80%;
+  border-radius: 500px;
+  background-color: white;
+
+  display: flex;
+  align-items: center;
+  .imgLogo{
+    @extend .text-center;
+    margin: auto;
+      img{
+        width: 100%;
+        height: 160px;
+      }
+  }
+}
+
+.interlineado{
+  box-shadow: 0px 2px inset #5E5E5E;
+}
+.mat-dialog-container {
+  border-radius: 30px!important;
+}
+.sideLinks{
+  .linkActive{
+    background-color: #424242 ;
+  }
+  ul li {
+    transition: all .5s ease-in-out;
+
+    &:hover, .linkActive{
+      background-color: #424242 ;
+    }
+    a{
+      color: white;
+      font-size: 1.25rem;
+    }
+  }
+}
+
+.d-block{
+  display: block!important;
+}
+
+
+
+
+.vh100{
+  height: 100vh;
+}
+
+.imgLogin{
+  background-image: url(assets/biblioteca/inicio.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: auto;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -5;
+  &::before{
+    content: '';
+    background-color: rgba($color: #2B2B2B, $alpha: .55);
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+  }
+}
+.cardLogin{
+  background-color: rgba($color: #ffffff, $alpha: .64);
+  border-radius: 50px;
+}
+.imagenInicio{
+  background-image: url(assets/biblioteca/libro.jpg);
+  background-position: center;
+  width: 100%;
+  background-size: cover;
+  z-index: -5;
+  position: absolute;
+  top: 0;
+  bottom: 40vh;
+  &::before{
+    content: "";
+    z-index: -1;
+    display: block;
+    position: absolute;
+    width: 100%;
+    background: rgba($color: #000000, $alpha: .55);
+    top: 0px;
+    bottom: 0px;
+  }
+}
+.vh-50{
+  height: 60vh;
+}
+.bg-invitado{
+  background-color: rgba($color: #000000, $alpha: .45);
+}
+
+
+
+.imagenLibroInvitado{
+  width: 7.8125rem;
+  height: 9.375rem;
+  //background-color: #2B2B2B;
+  img{
+    max-width: 100%;
+    max-height: 100%;
+    width: 100%;
+    height: 100%;
+  }
+  @media screen and (max-width:575px){
+  width: 100%;
+  height: 15.625rem;
+  }
+}
+.informacionInvitadoLibro{
+  p,a{
+    font-size: 0.875rem;
+    margin-bottom: 0.125rem;
+  }
+  a:last-child{
+    margin-bottom: 0rem;
+  }
+}
+.busquedaTipo{
+  input{
+    position: relative;
+    padding: 0.375rem 1.9rem 0.375rem 0.75rem;
+  }
+  button{
+    position: absolute;
+    right: 0;
+    top: 0.3125rem;
+  }
+}

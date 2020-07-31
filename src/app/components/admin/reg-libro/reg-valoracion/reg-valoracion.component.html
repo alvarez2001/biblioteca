@@ -1,0 +1,37 @@
+<h2 mat-dialog-title class="text-center">Registrar Valoración</h2>
+
+
+<mat-dialog-content>
+
+    <form [formGroup]="formGenero">
+        <div class="row">
+          <mat-form-field appearance="outline" class="col-6">
+            <mat-label>Nombre Genero</mat-label>
+            <mat-select formControlName="genero_id" required>
+              <mat-option *ngFor="let genero of generos" [value]="genero.id">{{genero.genero}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="col-6">
+            <mat-label>Puntaje</mat-label>
+            <input matInput formControlName="puntaje" required min="0" max="6"  type="number" >
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="col-12">
+            <mat-label>Descripcion</mat-label>
+            <input matInput formControlName="descripcion" required  type="text" >
+          </mat-form-field>
+
+        </div>
+    </form>
+
+</mat-dialog-content>
+
+
+<mat-dialog-actions  class="float-right">
+  <button class="btn white-text  red mx-1" mat-dialog-close>Cancelar</button>
+  <button class="btn white-text green" [disabled]="guardando" (click)="registrarValoracion()">
+    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="guardando"></span>
+    Registrar
+  </button>
+</mat-dialog-actions>

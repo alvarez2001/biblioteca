@@ -1,0 +1,519 @@
+<div class="col-12 text-center" *ngIf="!cargandoFormulario">
+  <app-cargando></app-cargando>
+</div>
+<div class="row mx-0" *ngIf="cargandoFormulario">
+
+
+    <div class="col-12">
+
+        <mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper>
+            <!--step1-->
+            <mat-step [stepControl]="firstFormGroup">
+            <form [formGroup]="firstFormGroup">
+                <ng-template matStepperIcon="edit">1</ng-template>
+                <ng-template matStepLabel>Libro</ng-template>
+
+                <h5 class="text-center mt-0">Información del Libro</h5>
+
+                <div class="col-12 d-block clearfix">
+                  <button class="btn float-right  d-block white-text grey darken-2" (click)="regTipoLibro()">Incluir Tipo de Libro</button>
+                </div>
+
+                <small class="red-text">{{precaucion}}</small>
+
+
+
+                  <mat-form-field appearance="outline" class="col-12">
+                    <mat-label>Titulo</mat-label>
+                    <input matInput type="text" maxlength="190" autocomplete="off" required minlength="1"  formControlName="titulo">
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" class="col-12">
+                    <mat-label>Subtítulo</mat-label>
+                    <input matInput type="text" maxlength="190" autocomplete="off"  minlength="1"  formControlName="subtitulo">
+                  </mat-form-field>
+
+
+
+                  <mat-form-field appearance="outline" class="col-12 col-md-4">
+                    <mat-label>Tipo de obra</mat-label>
+                    <mat-select formControlName="tipo_libro" required>
+                      <mat-option *ngFor="let tipoPropio of tipoObra" [value]="tipoPropio.id">{{tipoPropio.nombre}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+
+
+                  <mat-form-field appearance="outline" class="col-12 col-md-4">
+                    <mat-label>Registro</mat-label>
+                    <input matInput type="text" autocomplete="off" formControlName="registro" required minlength="1" pattern="[0-9]+" maxlength="6">
+                    <mat-error *ngIf="firstFormGroup.get('registro').hasError('asyncInvalid')"> El numero de registro ya existe</mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline" class="col-12 col-md-4">
+                    <mat-label>¿Se puede prestar?</mat-label>
+                    <mat-select formControlName="prestar" required>
+                      <mat-option value="Si">Si</mat-option>
+                      <mat-option value="No">No</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+
+                  <mat-form-field appearance="outline" class="col-12">
+                    <mat-label>Breve descripción</mat-label>
+                    <textarea matInput maxlength="300" minlength="1" formControlName="descripcion"></textarea>
+                  </mat-form-field>
+
+
+                  <mat-form-field appearance="outline" class="col-12">
+                    <mat-label>Palabras Clave</mat-label>
+                    <textarea matInput maxlength="300" minlength="1" formControlName="etiquetas"></textarea>
+                  </mat-form-field>
+
+
+
+
+
+
+                <div class="text-center">
+                    <button class="btn  grey white-text  darken-2" matStepperNext>Siguiente</button>
+                </div>
+            </form>
+            </mat-step>
+
+
+            <!--step2-->
+            <mat-step [stepControl]="secondFormGroup">
+
+
+
+                <form [formGroup]="secondFormGroup">
+                  <ng-template matStepperIcon="edit">2</ng-template>
+                  <ng-template matStepLabel>Autor</ng-template>
+
+                    <h5 class="text-center mt-0">Información del Autor</h5>
+
+
+                    <div class="col-12 d-block clearfix">
+                      <button class="btn float-right  d-block white-text grey darken-2" (click)="regAutor()">Incluir Autor</button>
+                    </div>
+
+
+                    <div class="row mt-2"  >
+                        <div class=" col-12 col-md-6 col-lg-5">
+                          <mat-form-field appearance="outline" class="col-12">
+                            <mat-label>Selecciona un autor</mat-label>
+                            <mat-select [(ngModel)]="autorID"  [ngModelOptions]="{standalone: true}">
+                              <mat-option  [value]="autor.id" *ngFor="let autor of autores"> {{autor.apellido}}<span *ngIf="autor.nombre">,</span> {{autor.nombre}}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+
+                        </div>
+                        <div class=" col-12 col-md-6 col-lg-5" >
+
+                          <mat-form-field appearance="outline" class="col-12" >
+                            <mat-label>Responsabilidad</mat-label>
+                            <mat-select [(ngModel)]="colaborador"  [ngModelOptions]="{standalone: true}">
+                              <mat-option *ngFor="let colaborador of tipoColaboracion" [value]="colaborador">{{colaborador}}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                        <div class=" col-12 col-lg-2 text-center mt-lg-3 mb-sm-3">
+                            <button class="btn white-text green" (click)="agregarAutor(autorID, colaborador)"><span class="icon-plus"></span></button>
+                        </div>
+                    </div>
+
+                    <div class="row pt-3 interlineado" formArrayName="autores" *ngFor="let autor of Autores.controls; let i = index">
+                        <div class=" col-12 col-md-6 col-lg-5" [formGroupName]="i">
+                            <mat-form-field appearance="outline" class="col-12">
+                              <mat-label>Selecciona un autor</mat-label>
+                              <mat-select  disabled formControlName="autor_id" >
+                                <mat-option  [value]="autor.id" *ngFor="let autor of autores"> {{autor.apellido }}<span *ngIf="autor.nombre">,</span> {{autor.nombre }}</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+
+                          </div>
+                          <div class=" col-12 col-md-6 col-lg-5" [formGroupName]="i"  >
+
+                            <mat-form-field appearance="outline" class="col-12">
+                              <mat-label>Responsabilidad</mat-label>
+                              <mat-select disabled formControlName="colaboracion">
+                                <mat-option *ngFor="let colaborador of tipoColaboracion" [value]="colaborador">{{colaborador}}</mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                          <div class=" col-12 col-lg-2 text-center mt-lg-3 mb-sm-3">
+                              <button class="btn white-text red" (click)="removerAutor(i)"><span class="icon-cross"></span></button>
+                          </div>
+                    </div>
+
+
+                    <div class="text-center col-12">
+                        <button class="btn white-text mx-1 grey darken-2"matStepperPrevious >Anterior</button>
+                        <button class="btn white-text mx-1 grey darken-2"matStepperNext >Siguiente</button>
+                    </div>
+                </form>
+
+
+            </mat-step>
+            <!--step2-->
+
+            <!--step3-->
+            <mat-step [stepControl]="thirtyFormGroup">
+
+
+
+                <form [formGroup]="thirtyFormGroup">
+                  <ng-template matStepperIcon="edit">3</ng-template>
+                  <ng-template matStepLabel>Editorial</ng-template>
+
+                    <h5 class="text-center mt-0">Editorial del libro</h5>
+
+                    <div class="col-12 d-block clearfix">
+                      <button class="btn float-right white-text grey darken-2" (click)="regEditorial()">Incluir Editorial</button>
+                    </div>
+
+
+                    <div class="row pt-3">
+                        <div class="col-10">
+
+                          <mat-form-field appearance="outline" class="col-12">
+                            <mat-label>Seleccione una Editorial</mat-label>
+                            <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="editorialID">
+                              <mat-option *ngFor="let editorial of libroEditorial" [value]="editorial.id">{{editorial.nombre}} <span *ngIf="editorial?.abreviado"> ( {{editorial.abreviado}} ) </span></mat-option>
+                            </mat-select>
+                          </mat-form-field>
+
+
+                        </div>
+
+                        <div class="col-2 text-center">
+                            <button class="btn white-text green mt-3" (click)="agregarEditorial(editorialID)"><span class="icon-plus"></span></button>
+                        </div>
+                    </div>
+
+                    <div class="row pt-3 interlineado" formArrayName="editoriales" *ngFor="let editorial of Editorial.controls; let i = index">
+                      <div class="col-10"  [formGroupName]="i">
+
+                        <mat-form-field appearance="outline" class="col-12">
+                          <mat-label>Seleccione una Editorial</mat-label>
+                          <mat-select formControlName="editorial_id">
+                            <mat-option *ngFor="let editorial of libroEditorial" [value]="editorial.id">{{editorial.nombre}}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+
+                      </div>
+
+                      <div class="col-2 text-center mt-3">
+                          <button class="btn white-text red"(click)="removerEditorial(i)"><span class="icon-cross"></span></button>
+                      </div>
+                    </div>
+
+
+                    <div class="text-center col-12">
+                      <button class="btn white-text mx-1 grey darken-2"matStepperPrevious >Anterior</button>
+                      <button class="btn white-text mx-1 grey darken-2"matStepperNext >Siguiente</button>
+                    </div>
+                </form>
+            </mat-step>
+            <!--step3-->
+
+            <!--step4-->
+            <mat-step [stepControl]="fourFormGroup">
+
+
+
+                <form [formGroup]="fourFormGroup">
+                  <ng-template matStepperIcon="edit">4</ng-template>
+                  <ng-template matStepLabel>Materia</ng-template>
+
+                    <h5 class="text-center mt-0">Materia del Libro</h5>
+
+                    <div class="col-12 clearfix d-block">
+                      <button class="btn  white-text float-right grey darken-2" (click)="regArea()">Incluir Area</button>
+
+                      <button class="btn  white-text float-right grey darken-2 mx-2" (click)="regMateria()">Incluir Materia</button>
+                    </div>
+
+
+                    <div class="row pt-3">
+                      <mat-form-field class="col-10" appearance="outline" >
+                        <mat-label>Seleccione una Materia</mat-label>
+                        <mat-select [ngModelOptions]="{standalone: true}" [(ngModel)]="materiaID">
+                          <mat-option *ngFor="let materia of libroMaterias" [value]="materia.id"><span *ngIf="materia.area">Area: {{materia.area.nombre }} |</span> {{materia.nombre }}  </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+
+
+                        <div class="col-2 text-center">
+                            <button class="btn white-text green mt-3" (click)="agregarMateria(materiaID)"><span class="icon-plus"></span></button>
+                        </div>
+                    </div>
+
+                    <div class="interlineado pt-3" formArrayName="materias" *ngFor="let materia of Materias.controls; let i = index">
+                      <div class="row" [formGroupName]="i">
+                        <mat-form-field class="col-10" appearance="outline">
+                          <mat-label>Seleccione una Materia</mat-label>
+                          <mat-select formControlName="materia_id">
+                            <mat-option *ngFor="let materia of libroMaterias" [value]="materia.id">Area: {{materia.area.nombre }} | {{materia.nombre }} </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+
+
+
+                          <div class="col-2 text-center">
+                              <button class="btn white-text red mt-3" (click)="removerMateria(i)"><span class="icon-cross"></span></button>
+                          </div>
+                      </div>
+                    </div>
+
+
+                    <div class="text-center col-12">
+                      <button class="btn white-text mx-1 grey darken-2"matStepperPrevious >Anterior</button>
+                      <button class="btn white-text mx-1 grey darken-2"matStepperNext >Siguiente</button>
+                    </div>
+                </form>
+            </mat-step>
+
+            <!--step4-->
+
+            <!--step5-->
+            <mat-step [stepControl]="fiveFormGroup">
+
+
+
+                <form [formGroup]="fiveFormGroup">
+                  <ng-template matStepperIcon="edit">5</ng-template>
+                  <ng-template matStepLabel>Información</ng-template>
+
+                    <h5 class="text-center mt-0">Informacion del Libro</h5>
+
+                    <div class="col-12 d-block clearfix">
+                      <button class="btn float-right  d-block white-text grey darken-2" (click)="regColeccion()">Incluir Colección</button>
+
+                      <button class="btn float-right mx-2  d-block white-text grey darken-2" (click)="regIdioma()">Incluir Idioma</button>
+
+                      <button class="btn float-right mx-2  d-block white-text grey darken-2" (click)="regFormato()">Incluir Formato</button>
+
+                    </div>
+
+                    <small class="red-text mt-2">{{precaucion}}</small>
+                    <div class="row">
+
+                      <mat-form-field appearance="outline" class="col-12 col-md-6 col-lg-3">
+                        <mat-label>Idioma</mat-label>
+                        <mat-select  required formControlName="idiomas" multiple name="idiomas[]">
+                          <mat-option *ngFor="let idioma of idiomas" [value]="idioma.id">{{idioma.idioma}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline" class="col-12 col-md-6 col-lg-4">
+                        <mat-label>Formato</mat-label>
+                        <mat-select formControlName="formato"  required>
+                          <mat-option *ngFor="let formato of formatos" [value]="formato.id">{{formato.formato}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline" class="col-12 col-md-6 col-lg-5">
+                        <mat-label>Colección / Series</mat-label>
+                        <mat-select formControlName="coleccion_id">
+                          <mat-option *ngFor="let coleccion of colecciones" [value]="coleccion.id">{{coleccion.nombre}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline" class="col-12 col-md-6 col-lg-3">
+                        <mat-label>Nº Colección / Series</mat-label>
+                        <input matInput autocomplete="off" formControlName="numero_coleccion"  type="text" >
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline" class="col-12 col-md-12 col-lg-3">
+                        <mat-label>Ciudad</mat-label>
+                        <input matInput required autocomplete="off" formControlName="ciudad"  type="text" >
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline" class="col-12 col-md-6 col-lg-3">
+                        <mat-label>Nº Impresión</mat-label>
+                        <input matInput formControlName="numero_impresion" autocomplete="off"  type="text" >
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline" class="col-12 col-md-6 col-lg-3">
+                        <mat-label>Fecha Impresión</mat-label>
+                        <input matInput formControlName="fecha_impresion"  type="date" >
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline" class="col-12 col-md-6 col-lg-3">
+                        <mat-label>Tomo</mat-label>
+                        <input matInput formControlName="tomo" autocomplete="off" type="text" >
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline" class="col-12 col-md-6 col-lg-3">
+                        <mat-label>Volumen</mat-label>
+                        <input matInput formControlName="volumen"  type="text" autocomplete="off">
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline" class="col-12 col-md-6 col-lg-3">
+                        <mat-label>Nº Edición</mat-label>
+                        <input matInput required formControlName="numero_edicion"  type="text" autocomplete="off">
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline" class="col-12 col-md-6 col-lg-3">
+                        <mat-label>Fecha Edición</mat-label>
+                        <input matInput formControlName="fecha_edicion"  type="date" >
+                      </mat-form-field>
+
+
+                      <div class="form-group col-12">
+                        <input type="file"   formControlName="url" >
+                      </div>
+
+
+
+                    </div>
+
+
+
+                    <div class="text-center col-12">
+                        <button class="btn white-text mx-1 grey darken-2 mt-1"matStepperPrevious >Anterior</button>
+                        <button class="btn white-text grey darken-2 mt-1"matStepperNext >Siguiente</button>
+                    </div>
+                </form>
+            </mat-step>
+            <!--step5-->
+
+            <!--step6-->
+            <mat-step [stepControl]="sixFormGroup">
+
+
+
+                <form [formGroup]="sixFormGroup">
+                  <ng-template matStepperIcon="edit">6</ng-template>
+                  <ng-template matStepLabel>ISBN</ng-template>
+
+                    <h5 class="text-center mt-0">ISBN del Libro</h5>
+
+
+                    <div class="col-12 mx-auto">
+
+                      <mat-form-field appearance="outline" class="col-12 col-md-6">
+                        <mat-label>Codigo</mat-label>
+                        <input matInput formControlName="codigo"  type="text" >
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline" class="col-12 col-md-6">
+                        <mat-label>Tipo</mat-label>
+                        <mat-select formControlName="clasificacion_id" required>
+                          <mat-option *ngFor="let tipo of tipoISBN" [value]="tipo.id">{{tipo.clasificacion}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                    </div>
+
+
+
+                    <div class="text-center col-12">
+                        <button class="btn white-text mx-1 grey darken-2 mt-1"matStepperPrevious >Anterior</button>
+                        <button class="btn white-text grey darken-2 mt-1"matStepperNext >Siguiente</button>
+                    </div>
+                </form>
+            </mat-step>
+            <!--step6-->
+
+
+            <!--step7-->
+            <mat-step [stepControl]="eightFormGroup" optional>
+
+
+
+              <form [formGroup]="eightFormGroup">
+                <ng-template matStepperIcon="edit">7</ng-template>
+                <ng-template matStepLabel>Valoracion</ng-template>
+
+                  <h5 class="text-center mt-0">Valoracion del Libro</h5>
+
+                  <div class="col-12 d-block clearfix">
+                    <button class="btn float-right  d-block white-text grey darken-2" (click)="regGenero()">Incluir Genero</button>
+
+                    <button class="btn float-right  d-block white-text grey darken-2 mx-2" (click)="regValoracion()">Incluir Valoración</button>
+                  </div>
+
+
+                  <div class="col-12 mx-auto mt-2">
+
+                    <mat-form-field appearance="outline" class="col-12 col-md-6">
+                      <mat-label>Genero</mat-label>
+                      <mat-select  (ngModelChange)="buscarValoracion()" [(ngModel)]="valorar" formControlName="generoId" >
+                        <mat-option *ngFor="let genero of generos" [value]="genero.id">{{genero.genero}}</mat-option>
+                      </mat-select>
+
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="col-12 col-md-6">
+                      <mat-label>Valoración</mat-label>
+                      <mat-select formControlName="valoracion_id"  >
+                        <mat-option *ngFor="let valor of valoracion" [value]="valor.id">{{valor.puntaje}} - {{valor.descripcion}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+                  </div>
+
+
+
+                  <div class="text-center col-12">
+                      <button class="btn white-text mx-1 grey darken-2 mt-1"matStepperPrevious >Anterior</button>
+                      <button class="btn white-text grey darken-2 mt-1"matStepperNext >Siguiente</button>
+                  </div>
+              </form>
+          </mat-step>
+
+
+
+            <!--step8-->
+            <mat-step [stepControl]="sevenFormGroup">
+
+
+
+                <form [formGroup]="sevenFormGroup">
+                  <ng-template matStepperIcon="edit" let-index="index">{{index + 1}}</ng-template>
+                  <ng-template matStepLabel>Ubicación</ng-template>
+
+                    <h5 class="text-center mt-0">Ubicación del Libro</h5>
+
+                    <small class="red-text">{{precaucion}}</small>
+                    <div class="row">
+
+                      <mat-form-field appearance="outline" class="col-12">
+                        <mat-label>Biblioteca</mat-label>
+                        <input matInput required autocomplete="off" formControlName="biblioteca" minlength="2" maxlength="4" pattern="[0-9]+"  type="text" >
+                        <span matPrefix>B-</span>
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" class="col-12 col-md-6">
+                        <mat-label>Estante</mat-label>
+                        <input matInput required autocomplete="off" formControlName="estante" minlength="1" maxlength="1" pattern="[A-Ka-k]+"  type="text" >
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline" class="col-12 col-md-6">
+                        <mat-label>Numero</mat-label>
+                        <input matInput required autocomplete="off" formControlName="numero" minlength="2" maxlength="4" pattern="[0-9]+"  type="text" >
+                      </mat-form-field>
+
+                    </div>
+
+
+
+                    <div class="text-center col-12">
+                      <button class="btn white-text  grey darken-2 mt-1"matStepperNext [disabled]="!sevenFormGroup.valid   || guardando" (click)="guardar(stepper)">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="guardando"></span>
+                        Guardar</button>
+                        <button class="btn white-text mx-1 grey darken-2 mt-1"matStepperPrevious >Anterior</button>
+
+                    </div>
+                </form>
+            </mat-step>
+
+
+        </mat-horizontal-stepper>
+
+
+      </div>
+  </div>

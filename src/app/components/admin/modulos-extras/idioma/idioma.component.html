@@ -1,0 +1,39 @@
+<div class="clearfix col-12 mt-2">
+  <button class="btn  icon-plus btn-primary" (click)="regIdioma()"></button>
+</div>
+
+<small *ngIf="datosPaginacion">Resultados {{datosPaginacion.from}}-{{datosPaginacion.to}} de alrededor de {{datosPaginacion.total}}</small>
+
+<div class="table-responsive " >
+  <table class="table shadow-sm rounded  table-hover text-center table-striped tablaPropiaMinwidth">
+    <thead class="thead-dark">
+      <tr>
+        <th>Idioma</th>
+        <th scope="col">Acción</th>
+      </tr>
+    </thead>
+
+    <tr  class="col-12 mx-auto text-center" *ngIf="!data">
+      <td colspan="3">
+        <app-cargando></app-cargando>
+      </td>
+    </tr>
+
+    <tbody *ngIf="data">
+      <tr *ngFor="let dat of data">
+        <td>
+          {{dat.idioma}}
+        </td>
+
+        <td>
+            <button class="btn text-primary icon-bin red-text" (click)="eliminarIdioma(dat.id)"></button>
+            <button class="btn text-primary icon-clipboard orange-text" (click)="editarIdioma(dat)"></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="mt-3" *ngIf="datosPaginacion">
+ <app-navegacion [datosPaginacion]="datosPaginacion" (paginar)="paginacion($event)"></app-navegacion>
+</div>

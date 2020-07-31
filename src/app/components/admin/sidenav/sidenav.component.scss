@@ -1,0 +1,22 @@
+.tituloSide{
+  font-size: 1.875rem;
+  color: white;
+  margin-top: 1.875rem;
+}
+.sideLinks{
+  ul{
+    margin-top: 1.25em;
+    list-style: none;
+    display: block;
+    width: 100%;
+    padding: 0px;
+
+    li{
+      padding:0.625em 0px;
+      a{
+
+        text-decoration: none;
+      }
+    }
+  }
+}

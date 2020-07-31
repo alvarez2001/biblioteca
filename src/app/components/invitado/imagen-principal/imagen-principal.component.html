@@ -1,0 +1,28 @@
+<div class="imagenInicio"></div>
+<div class="container-fluid">
+  <div class="row text-white justify-content-center align-items-center vh-50">
+    <div class="col-12  text-center position-relative" >
+      <h3>SRM Carúpano Biblioteca</h3>
+      <form [formGroup]="busquedaForm" class="col-12 col-md-8 col-lg-5 mx-auto " [ngClass]="{'animacion':ocultar}" *ngIf="ocultar">
+        <div class="row">
+
+          <select class="col-4 form-control" name="dataSelect" formControlName="search_type">
+            <option disabled selected value="">Tipo de busqueda</option>
+            <option *ngFor="let opcion of opciones" [value]="opcion">{{opcion | titlecase}}</option>
+          </select>
+
+          <div class="col-8 p-0 busquedaTipo">
+            <input type="text" placeholder="Busqueda personalizada" name="data" formControlName="search_value" class="form-control" (blur)="busqueda()">
+            <button class="icon-search btn" type="button" (click)="busqueda()"></button>
+          </div>
+
+        </div>
+      </form>
+
+
+
+
+    </div>
+
+  </div>
+</div>

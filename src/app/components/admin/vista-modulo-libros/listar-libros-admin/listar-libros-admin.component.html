@@ -1,0 +1,54 @@
+<div class="container clearfix mt-4">
+
+
+  <small *ngIf="dataLibro">Resultados {{dataLibro.from}}-{{dataLibro.to}} de alrededor de {{dataLibro.total}}</small>
+  <div class="table-responsive " >
+    <table class="table shadow-sm rounded  table-hover text-center table-striped tablaPropiaMinwidth">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Titulo</th>
+          <th scope="col">Autor</th>
+          <th scope="col">Editorial</th>
+          <th scope="col">Acción</th>
+        </tr>
+      </thead>
+
+      <tr  class="col-12 mx-auto text-center" *ngIf="!libros">
+        <td colspan="4">
+          <app-cargando></app-cargando>
+        </td>
+      </tr>
+
+      <tbody *ngIf="libros">
+        <tr  *ngFor="let libro of libros">
+          <td>{{libro.titulo}}</td>
+          <td>{{libro.autores[0].autor.apellido }}<span *ngIf="libro.autores[0].autor.nombre">, {{libro.autores[0].autor.nombre }}</span> </td>
+          <td>{{libro.editoriales[0].editorial.nombre }} <span *ngIf="libro.editoriales[0].editorial?.abreviado">- ( {{libro.editoriales[0].editorial?.abreviado}} )</span></td>
+          <td>
+              <a [routerLink]="[libro.id]" class="btn text-primary">
+                <span class="icon-book"></span>
+              </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-3" *ngIf="dataLibro">
+    <nav aria-label="Page navigation example" >
+      <ul class="pagination justify-content-center">
+        <li class="page-item" [ngClass]="{'disabled':dataLibro.prev_page_url === null}">
+          <button class="page-link" (click)="paginacion(dataLibro.prev_page_url)">Anterior</button>
+        </li>
+
+        <li class="page-item">
+          <button class="page-link active">{{dataLibro.current_page}}</button>
+        </li>
+
+        <li class="page-item" [ngClass]="{'disabled':dataLibro.next_page_url === null}">
+          <button class="page-link" (click)="paginacion(dataLibro.next_page_url)">Siguiente</button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

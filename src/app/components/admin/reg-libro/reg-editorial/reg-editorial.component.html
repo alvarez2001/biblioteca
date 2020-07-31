@@ -1,0 +1,31 @@
+<h2 mat-dialog-title class="text-center">Registrar Editorial</h2>
+
+
+<mat-dialog-content>
+
+    <form [formGroup]="formEditorial">
+        <div class="row">
+
+              <mat-form-field appearance="outline" class="col-12">
+                <mat-label>Nombre</mat-label>
+                <input type="text" matInput formControlName="nombre" required>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="col-12">
+                <mat-label>Abreviatura</mat-label>
+                <input type="text" matInput formControlName="abreviado" >
+              </mat-form-field>
+
+
+        </div>
+    </form>
+
+</mat-dialog-content>
+
+
+<mat-dialog-actions  class="float-right">
+  <button class="btn white-text  red mx-1" mat-dialog-close>Cancelar</button>
+  <button class="btn white-text green" (click)="registrarEditorial()" [disabled]="guardando">
+    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="guardando"></span>
+    Registrar</button>
+</mat-dialog-actions>

@@ -1,0 +1,23 @@
+<div class="">
+  <form >
+    <h2 mat-dialog-title class="text-center mb-2">Cambiar imagen</h2>
+    <div class="row ">
+      <div class="mx-auto mb-2">
+
+          <div class="mb-2">
+            <img [src]="url+'libro/'+data.imagen" class="col-12" style="height: 300px;" >
+          </div>
+
+          <div class="col-12">
+            <input type="file"  class="mx-auto" (change)="enviarImagen($event)">
+          </div>
+
+      </div>
+      <div class="col-12 ">
+        <button type="submit" class="btn text-danger float-right " mat-dialog-close>
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

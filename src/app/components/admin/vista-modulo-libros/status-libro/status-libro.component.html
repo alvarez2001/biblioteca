@@ -1,0 +1,57 @@
+<div class="container" >
+  <small *ngIf="datosPaginacion">Resultados {{datosPaginacion.from}}-{{datosPaginacion.to}} de alrededor de {{datosPaginacion.total}}</small>
+
+  <div class="table-responsive mt-2" >
+    <table class="table shadow-sm rounded  table-hover text-center table-striped tablaPropiaMinwidth">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Ubicación</th>
+          <th>Titulo</th>
+          <th>Autor</th>
+          <th>Editorial</th>
+          <th>Status</th>
+          <th scope="col">Acción</th>
+        </tr>
+      </thead>
+
+      <tr  class="col-12 mx-auto text-center" *ngIf="!data">
+        <td colspan="6">
+          <app-cargando></app-cargando>
+        </td>
+      </tr>
+
+      <tbody *ngIf="data">
+        <tr *ngFor="let dat of data">
+          <td>
+              B{{dat.ubicacion[0].biblioteca}} - {{dat.ubicacion[0].estante}} - {{dat.ubicacion[0].numero}}
+          </td>
+          <td>
+            {{dat.titulo}}
+          </td>
+          <td>
+            {{dat.autores[0].autor.apellido }}<span *ngIf="dat.autores[0].autor.nombre">, {{dat.autores[0].autor.nombre }}</span>
+          </td>
+          <td>
+            {{dat.editoriales[0].editorial.nombre }} <span *ngIf="dat?.editoriales[0]?.editorial?.abreviado"> {{dat.editoriales[0].editorial.abreviado }} </span>
+          </td>
+          <td>
+            <span *ngIf="dat.status === 0 ">Creado</span>
+            <span *ngIf="dat.status === 1 ">Publicado</span>
+            <span *ngIf="dat.status === 2 ">Dañado</span>
+            <span *ngIf="dat.status === 3 ">Perdido</span>
+          </td>
+
+          <td>
+            <button class="btn text-primary icon-cog " title="Status" (click)="status(dat)"></button>
+            <button class="btn text-primary icon-images " title="Imagen" (click)="imagenCambio(dat)"></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-3" *ngIf="datosPaginacion">
+   <app-navegacion [datosPaginacion]="datosPaginacion" (paginar)="paginacion($event)"></app-navegacion>
+  </div>
+
+</div>
