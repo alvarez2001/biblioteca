@@ -32,7 +32,7 @@
             {{dat.autores[0].autor.apellido }}<span *ngIf="dat.autores[0].autor.nombre">, {{dat.autores[0].autor.nombre }}</span>
           </td>
           <td>
-            {{dat.editoriales[0].editorial.nombre }} <span *ngIf="dat?.editoriales[0]?.editorial?.abreviado"> {{dat.editoriales[0].editorial.abreviado }} </span>
+            {{dat.editoriales[0].editorial.nombre }} <span *ngIf="dat?.editoriales[0]?.editorial?.abreviado">( {{dat.editoriales[0].editorial.abreviado }} )</span>
           </td>
           <td>
             <span *ngIf="dat.status === 0 ">Creado</span>
