@@ -16,6 +16,7 @@ import { RegColeccionComponent } from './reg-coleccion/reg-coleccion.component';
 import { RegIdiomaComponent } from '../modulos-extras/idioma/reg-idioma/reg-idioma.component';
 import { RegFormatoComponent } from '../modulos-extras/formatos/reg-formato/reg-formato.component';
 import { Router } from '@angular/router';
+import { RegClasificacionComponent } from '../modulos-extras/clasificaciones/reg-clasificacion/reg-clasificacion.component';
 
 
 
@@ -120,8 +121,9 @@ export class RegLibroComponent implements OnInit, Validator {
     })
 
   }
-
+  bloquearButton:boolean = false;
   cargaGeneral(){
+    this.bloquearButton = true;
     this.cargarAutores();
     this.cargarMaterias();
     this.cargarEditoriales();
@@ -131,6 +133,22 @@ export class RegLibroComponent implements OnInit, Validator {
     this.cargarFormatos();
     this.cargarIdiomas();
     this.cargarISBN();
+
+
+    setTimeout(()=>{
+      this.bloquearButton = false;
+    },20000)
+
+  }
+
+  regISBN():void{
+    const dialogRef = this.dialog.open(RegClasificacionComponent, {
+      width: '500px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.cargarISBN();
+    });
   }
 
   private cargarISBN(){
@@ -188,6 +206,8 @@ export class RegLibroComponent implements OnInit, Validator {
       this.cargandoFormulario = false
     })
   }
+
+
 
   private buscarColecciones(){
     this.libroSvc.buscarColeccion().subscribe(res => {

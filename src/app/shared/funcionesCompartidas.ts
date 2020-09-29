@@ -96,7 +96,8 @@ export class FuncionesCompartidas{
         'autor',
         'colaborador',
         'editor',
-        'coordinador'
+        'coordinador',
+        'director',
       ].sort();
     }
 

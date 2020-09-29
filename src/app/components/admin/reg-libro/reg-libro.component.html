@@ -3,8 +3,13 @@
 </div>
 <div class="row mx-0" *ngIf="cargandoFormulario">
 
-
     <div class="col-12">
+
+
+      <div class="col-12 d-block clearfix">
+        <button class="btn white-text grey darken-2" [disabled]="bloquearButton" (click)="cargaGeneral()">Recargar datos</button>
+      </div>
+
 
         <mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper>
             <!--step1-->
@@ -391,6 +396,10 @@
                   <ng-template matStepLabel>ISBN</ng-template>
 
                     <h5 class="text-center mt-0">ISBN del Libro</h5>
+
+                    <div class="col-12 d-block clearfix">
+                      <button class="btn float-right  d-block white-text grey darken-2" (click)="regISBN()">Incluir ISBN</button>
+                    </div>
 
 
                     <div class="col-12 mx-auto">
